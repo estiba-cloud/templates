@@ -2,7 +2,7 @@
 
 Apps ready to deploy on [Estiba](https://estiba.cloud) in one click. Each folder in `list/` is one app: Estiba's dashboard lists them under **New service**, asks only for what the template needs (a password comes generated), and creates the service. An agent connected to Estiba finds them with the `list_templates` tool.
 
-Every push to `main` checks them and writes them all to `index.json`, which CI commits; Estiba's dashboard reads it from `https://raw.githubusercontent.com/estiba-cloud/templates/main/index.json`. Do not edit `index.json` by hand.
+Every push to `main` checks them and writes them all to `index.json`, which CI commits; Estiba reads it at `https://templates.estiba.cloud/index.json`, which redirects to this repository's files on raw.githubusercontent.com. Do not edit `index.json` by hand.
 
 ## Add your app
 

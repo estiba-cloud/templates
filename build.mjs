@@ -1,10 +1,9 @@
-// Checks every template and writes them all to index.json, which Estiba's dashboard reads from
-// raw.githubusercontent.com (CI commits it on every push to main).
+// Checks every template and writes them all to index.json, which Estiba reads at
+// templates.estiba.cloud (CI commits it on every push to main). Logos are paths in this repository.
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import Ajv from "ajv/dist/2020.js";
 
-const RAW = "https://raw.githubusercontent.com/estiba-cloud/templates/main/";
 const MAX_LOGO = 64 * 1024; // bytes
 
 // git's answer, or "" before the first commit.
@@ -36,7 +35,7 @@ const templates = readdirSync("list")
     else if (statSync(logo).size > MAX_LOGO) fail(`${logo} is over ${MAX_LOGO / 1024} KB`);
     // When something in its folder last changed; now for one not committed yet.
     const updatedAt = git("log", "-1", "--format=%cI", "--", dir);
-    return { id, ...t, logo: RAW + logo, updatedAt: new Date(updatedAt || Date.now()).toISOString() };
+    return { id, ...t, logo, updatedAt: new Date(updatedAt || Date.now()).toISOString() };
   });
 
 if (errors.length) {

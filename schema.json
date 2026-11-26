@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/estiba-cloud/templates/main/schema.json",
+  "$id": "https://templates.estiba.cloud/schema.json",
   "title": "Estiba template",
   "description": "An app ready to deploy on Estiba: list/<id>/config.json, beside its logo.svg or logo.png. Its id is the folder's name.",
   "type": "object",
