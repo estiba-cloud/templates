@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/estiba-cloud/templates/main/schema.json",
+  "title": "Estiba template",
+  "description": "An app ready to deploy on Estiba: list/<id>/config.json, beside its logo.svg or logo.png. Its id is the folder's name.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "description",
+    "category",
+    "url",
+    "author",
+    "inputs",
+    "service"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "description": "One sentence, in English."
+    },
+    "category": {
+      "enum": [
+        "database",
+        "web",
+        "monitoring",
+        "automation",
+        "storage",
+        "development",
+        "ai",
+        "media",
+        "games",
+        "messaging"
+      ],
+      "description": "Where it is listed."
+    },
+    "url": {
+      "$ref": "#/$defs/link",
+      "description": "The app's website."
+    },
+    "author": {
+      "$ref": "#/$defs/link",
+      "description": "One link to whoever makes it: GitHub, X, a website..."
+    },
+    "inputs": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "What the person fills in. All are required; `${NAME}` in the service is replaced with the value.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "label"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "default": {
+            "type": "string",
+            "minLength": 1
+          },
+          "generate": {
+            "const": true,
+            "description": "Filled with 32 random letters and digits, for passwords."
+          },
+          "type": {
+            "const": "domain",
+            "description": "A domain of the person's, whose DNS they point at Estiba."
+          }
+        },
+        "not": {
+          "required": [
+            "default",
+            "generate"
+          ]
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "image"
+      ],
+      "description": "The fields of Estiba's create_service, without the name.",
+      "properties": {
+        "image": {
+          "type": "string",
+          "pattern": ":[A-Za-z0-9._-]+$",
+          "not": {
+            "pattern": ":latest$"
+          },
+          "description": "With a tag that is not latest."
+        },
+        "command": {
+          "type": "string"
+        },
+        "env": {
+          "$ref": "#/$defs/variables"
+        },
+        "secrets": {
+          "$ref": "#/$defs/variables"
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "port"
+            ],
+            "properties": {
+              "port": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "protocol": {
+                "enum": [
+                  "tcp",
+                  "udp"
+                ]
+              }
+            }
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "domain",
+              "port"
+            ],
+            "properties": {
+              "domain": {
+                "type": "string"
+              },
+              "port": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "https": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "volumes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "folder",
+              "path"
+            ],
+            "properties": {
+              "folder": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]{1,64}$"
+              },
+              "path": {
+                "type": "string",
+                "pattern": "^(/[A-Za-z0-9._-]+)+$"
+              }
+            }
+          }
+        },
+        "alwaysOn": {
+          "type": "boolean"
+        },
+        "grace": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600
+        }
+      }
+    }
+  },
+  "$defs": {
+    "link": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "variables": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schema.json",
+  "name": "Adminer",
+  "description": "A web page to browse and edit MariaDB, PostgreSQL and other databases.",
+  "category": "database",
+  "url": "https://www.adminer.org",
+  "author": "https://github.com/vrana",
+  "inputs": [
+    {
+      "name": "DOMAIN",
+      "label": "Domain",
+      "type": "domain"
+    }
+  ],
+  "service": {
+    "image": "adminer:6",
+    "domains": [
+      {
+        "domain": "${DOMAIN}",
+        "port": 8080
+      }
+    ]
+  }
+}

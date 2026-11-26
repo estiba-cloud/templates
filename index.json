@@ -1,0 +1,206 @@
+{
+ "templates": [
+  {
+   "id": "adminer",
+   "name": "Adminer",
+   "description": "A web page to browse and edit MariaDB, PostgreSQL and other databases.",
+   "category": "database",
+   "url": "https://www.adminer.org",
+   "author": "https://github.com/vrana",
+   "inputs": [
+    {
+     "name": "DOMAIN",
+     "label": "Domain",
+     "type": "domain"
+    }
+   ],
+   "service": {
+    "image": "adminer:6",
+    "domains": [
+     {
+      "domain": "${DOMAIN}",
+      "port": 8080
+     }
+    ]
+   },
+   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/adminer/logo.svg",
+   "updatedAt": "2026-11-26T18:47:58.653Z"
+  },
+  {
+   "id": "mariadb",
+   "name": "MariaDB",
+   "description": "MySQL-compatible database, with one user and a database of the same name.",
+   "category": "database",
+   "url": "https://mariadb.org",
+   "author": "https://github.com/MariaDB",
+   "inputs": [
+    {
+     "name": "USER",
+     "label": "User",
+     "default": "app"
+    },
+    {
+     "name": "PASSWORD",
+     "label": "Password",
+     "generate": true
+    },
+    {
+     "name": "ROOT_PASSWORD",
+     "label": "Root password",
+     "generate": true
+    }
+   ],
+   "service": {
+    "image": "mariadb:11.8",
+    "env": {
+     "MARIADB_USER": "${USER}",
+     "MARIADB_DATABASE": "${USER}"
+    },
+    "secrets": {
+     "MARIADB_PASSWORD": "${PASSWORD}",
+     "MARIADB_ROOT_PASSWORD": "${ROOT_PASSWORD}"
+    },
+    "ports": [
+     {
+      "port": 3306,
+      "protocol": "tcp"
+     }
+    ],
+    "volumes": [
+     {
+      "folder": "data",
+      "path": "/var/lib/mysql"
+     }
+    ],
+    "grace": 60
+   },
+   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/mariadb/logo.svg",
+   "updatedAt": "2026-11-26T18:47:58.655Z"
+  },
+  {
+   "id": "mongodb",
+   "name": "MongoDB",
+   "description": "Document database, with one administrator user.",
+   "category": "database",
+   "url": "https://www.mongodb.com",
+   "author": "https://github.com/mongodb",
+   "inputs": [
+    {
+     "name": "USER",
+     "label": "User",
+     "default": "admin"
+    },
+    {
+     "name": "PASSWORD",
+     "label": "Password",
+     "generate": true
+    }
+   ],
+   "service": {
+    "image": "mongo:8.0",
+    "env": {
+     "MONGO_INITDB_ROOT_USERNAME": "${USER}"
+    },
+    "secrets": {
+     "MONGO_INITDB_ROOT_PASSWORD": "${PASSWORD}"
+    },
+    "ports": [
+     {
+      "port": 27017,
+      "protocol": "tcp"
+     }
+    ],
+    "volumes": [
+     {
+      "folder": "data",
+      "path": "/data/db"
+     }
+    ],
+    "grace": 60
+   },
+   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/mongodb/logo.svg",
+   "updatedAt": "2026-11-26T18:47:58.656Z"
+  },
+  {
+   "id": "postgres",
+   "name": "PostgreSQL",
+   "description": "Relational database, with one user and a database of the same name.",
+   "category": "database",
+   "url": "https://www.postgresql.org",
+   "author": "https://github.com/postgres",
+   "inputs": [
+    {
+     "name": "USER",
+     "label": "User",
+     "default": "app"
+    },
+    {
+     "name": "PASSWORD",
+     "label": "Password",
+     "generate": true
+    }
+   ],
+   "service": {
+    "image": "postgres:18",
+    "env": {
+     "POSTGRES_USER": "${USER}",
+     "POSTGRES_DB": "${USER}"
+    },
+    "secrets": {
+     "POSTGRES_PASSWORD": "${PASSWORD}"
+    },
+    "ports": [
+     {
+      "port": 5432,
+      "protocol": "tcp"
+     }
+    ],
+    "volumes": [
+     {
+      "folder": "data",
+      "path": "/var/lib/postgresql"
+     }
+    ],
+    "grace": 60
+   },
+   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/postgres/logo.svg",
+   "updatedAt": "2026-11-26T18:47:58.658Z"
+  },
+  {
+   "id": "valkey",
+   "name": "Valkey",
+   "description": "In-memory key-value store compatible with Redis, saved to disk.",
+   "category": "database",
+   "url": "https://valkey.io",
+   "author": "https://github.com/valkey-io",
+   "inputs": [
+    {
+     "name": "PASSWORD",
+     "label": "Password",
+     "generate": true
+    }
+   ],
+   "service": {
+    "image": "valkey/valkey:9",
+    "secrets": {
+     "VALKEY_EXTRA_FLAGS": "--requirepass ${PASSWORD} --appendonly yes"
+    },
+    "ports": [
+     {
+      "port": 6379,
+      "protocol": "tcp"
+     }
+    ],
+    "volumes": [
+     {
+      "folder": "data",
+      "path": "/data"
+     }
+    ],
+    "grace": 60
+   },
+   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/valkey/logo.svg",
+   "updatedAt": "2026-11-26T18:47:58.660Z"
+  }
+ ]
+}

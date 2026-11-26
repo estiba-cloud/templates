@@ -1,0 +1,27 @@
+# Checks the templates on every pull request; on main it also writes index.json and commits it when it
+# changed, for Estiba to read from raw.githubusercontent.com. Its own push starts no other run.
+name: Index
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: write
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # each template's last change
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci && node build.mjs
+      - if: github.event_name == 'push'
+        run: |
+          git diff --quiet index.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update the index" index.json
+          git push

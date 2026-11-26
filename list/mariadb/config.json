@@ -1,0 +1,49 @@
+{
+  "$schema": "../../schema.json",
+  "name": "MariaDB",
+  "description": "MySQL-compatible database, with one user and a database of the same name.",
+  "category": "database",
+  "url": "https://mariadb.org",
+  "author": "https://github.com/MariaDB",
+  "inputs": [
+    {
+      "name": "USER",
+      "label": "User",
+      "default": "app"
+    },
+    {
+      "name": "PASSWORD",
+      "label": "Password",
+      "generate": true
+    },
+    {
+      "name": "ROOT_PASSWORD",
+      "label": "Root password",
+      "generate": true
+    }
+  ],
+  "service": {
+    "image": "mariadb:11.8",
+    "env": {
+      "MARIADB_USER": "${USER}",
+      "MARIADB_DATABASE": "${USER}"
+    },
+    "secrets": {
+      "MARIADB_PASSWORD": "${PASSWORD}",
+      "MARIADB_ROOT_PASSWORD": "${ROOT_PASSWORD}"
+    },
+    "ports": [
+      {
+        "port": 3306,
+        "protocol": "tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "folder": "data",
+        "path": "/var/lib/mysql"
+      }
+    ],
+    "grace": 60
+  }
+}

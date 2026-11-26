@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schema.json",
+  "name": "PostgreSQL",
+  "description": "Relational database, with one user and a database of the same name.",
+  "category": "database",
+  "url": "https://www.postgresql.org",
+  "author": "https://github.com/postgres",
+  "inputs": [
+    {
+      "name": "USER",
+      "label": "User",
+      "default": "app"
+    },
+    {
+      "name": "PASSWORD",
+      "label": "Password",
+      "generate": true
+    }
+  ],
+  "service": {
+    "image": "postgres:18",
+    "env": {
+      "POSTGRES_USER": "${USER}",
+      "POSTGRES_DB": "${USER}"
+    },
+    "secrets": {
+      "POSTGRES_PASSWORD": "${PASSWORD}"
+    },
+    "ports": [
+      {
+        "port": 5432,
+        "protocol": "tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "folder": "data",
+        "path": "/var/lib/postgresql"
+      }
+    ],
+    "grace": 60
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "../../schema.json",
+  "name": "MongoDB",
+  "description": "Document database, with one administrator user.",
+  "category": "database",
+  "url": "https://www.mongodb.com",
+  "author": "https://github.com/mongodb",
+  "inputs": [
+    {
+      "name": "USER",
+      "label": "User",
+      "default": "admin"
+    },
+    {
+      "name": "PASSWORD",
+      "label": "Password",
+      "generate": true
+    }
+  ],
+  "service": {
+    "image": "mongo:8.0",
+    "env": {
+      "MONGO_INITDB_ROOT_USERNAME": "${USER}"
+    },
+    "secrets": {
+      "MONGO_INITDB_ROOT_PASSWORD": "${PASSWORD}"
+    },
+    "ports": [
+      {
+        "port": 27017,
+        "protocol": "tcp"
+      }
+    ],
+    "volumes": [
+      {
+        "folder": "data",
+        "path": "/data/db"
+      }
+    ],
+    "grace": 60
+  }
+}
