@@ -23,7 +23,7 @@
      }
     ]
    },
-   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/adminer/logo.svg",
+   "logo": "list/adminer/logo.svg",
    "updatedAt": "2026-11-26T19:42:18.000Z"
   },
   {
@@ -74,7 +74,7 @@
     ],
     "grace": 60
    },
-   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/mariadb/logo.svg",
+   "logo": "list/mariadb/logo.svg",
    "updatedAt": "2026-11-26T19:42:18.000Z"
   },
   {
@@ -118,7 +118,7 @@
     ],
     "grace": 60
    },
-   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/mongodb/logo.svg",
+   "logo": "list/mongodb/logo.svg",
    "updatedAt": "2026-11-26T19:42:18.000Z"
   },
   {
@@ -163,7 +163,7 @@
     ],
     "grace": 60
    },
-   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/postgres/logo.svg",
+   "logo": "list/postgres/logo.svg",
    "updatedAt": "2026-11-26T19:42:18.000Z"
   },
   {
@@ -199,7 +199,7 @@
     ],
     "grace": 60
    },
-   "logo": "https://raw.githubusercontent.com/estiba-cloud/templates/main/list/valkey/logo.svg",
+   "logo": "list/valkey/logo.svg",
    "updatedAt": "2026-11-26T19:42:18.000Z"
   }
  ]
